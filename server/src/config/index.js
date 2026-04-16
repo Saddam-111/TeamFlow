@@ -1,5 +1,16 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
+const getCorsOrigin = () => {
+  if (isProduction) {
+    const corsOrigin = process.env.CORS_ORIGIN;
+    if (corsOrigin) {
+      return corsOrigin.split(',').map(o => o.trim());
+    }
+    return ['http://localhost:5173'];
+  }
+  return ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+};
+
 export default {
   server: {
     port: process.env.PORT || 5000,
@@ -15,9 +26,7 @@ export default {
     refreshExpire: process.env.JWT_REFRESH_EXPIRE || '7d'
   },
   cors: {
-    origin: isProduction 
-      ? (process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()) : ['http://localhost:5173'])
-      : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+    origin: getCorsOrigin(),
     credentials: true
   }
 };
