@@ -11,10 +11,13 @@ class SocketService {
   }
 
   initialize(server) {
+    const corsOrigin = Array.isArray(config.cors.origin) ? config.cors.origin : [config.cors.origin];
+    
     this.io = new Server(server, {
       cors: {
-        origin: config.cors.origin,
-        credentials: true
+        origin: corsOrigin,
+        credentials: true,
+        methods: ['GET', 'POST']
       }
     });
 

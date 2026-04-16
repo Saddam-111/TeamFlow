@@ -24,7 +24,14 @@ import uploadRoutes from './modules/upload/upload.routes.js';
 const app = express();
 const httpServer = createServer(app);
 
-app.use(cors({ origin: config.cors.origin, credentials: true }));
+const corsOptions = {
+  origin: config.cors.origin,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/health', (req, res) => {
