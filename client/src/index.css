@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #09090B;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-acid-yellow text-bg-black font-bold uppercase tracking-wider py-3 px-6 transition-all duration-150;
+  }
+  
+  .btn-primary:hover {
+    @apply bg-white text-black scale-105;
+  }
+
+  .input-field {
+    @apply bg-surface border border-surface-light text-white px-4 py-3 outline-none focus:border-acid-yellow transition-colors w-full;
+  }
+
+  .card {
+    @apply bg-surface border border-surface-light p-6;
+  }
+
+  .heading-display {
+    @apply text-display font-black uppercase tracking-tighter leading-none;
+  }
+
+  .heading-hero {
+    @apply text-hero font-bold uppercase tracking-tight leading-none;
+  }
+
+  .heading-main {
+    @apply text-h1 font-bold uppercase tracking-tight;
+  }
+
+  .marquee-section {
+    @apply overflow-hidden whitespace-nowrap py-4 bg-acid-yellow text-black;
+  }
+
+  .marquee-content {
+    @apply inline-block animate-marquee;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-acid-yellow to-white bg-clip-text text-transparent;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #18181b;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+  }
+
+  /* No scrollbar utility */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+}
