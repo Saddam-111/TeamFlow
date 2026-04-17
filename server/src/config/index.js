@@ -1,12 +1,13 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
 const getCorsOrigin = () => {
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
   if (isProduction) {
     const corsOrigin = process.env.CORS_ORIGIN;
     if (corsOrigin) {
       return corsOrigin.split(',').map(o => o.trim());
     }
-    return ['http://localhost:5173'];
+    return [frontendUrl];
   }
   return ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
 };
