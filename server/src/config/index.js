@@ -1,15 +1,15 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
 const getCorsOrigin = () => {
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-  if (isProduction) {
-    const corsOrigin = process.env.CORS_ORIGIN;
-    if (corsOrigin) {
-      return corsOrigin.split(',').map(o => o.trim());
-    }
-    return [frontendUrl];
+  if (process.env.CORS_ORIGIN) {
+    return process.env.CORS_ORIGIN.split(',').map(o => o.trim());
   }
-  return ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+
+  return [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://team-flow-hazel.vercel.app'
+  ];
 };
 
 export default {
@@ -18,7 +18,7 @@ export default {
     env: process.env.NODE_ENV || 'development'
   },
   database: {
-    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/teamflow'
+    uri: process.env.MONGODB_URI
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'default_secret_change_me',

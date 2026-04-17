@@ -24,14 +24,28 @@ import uploadRoutes from './modules/upload/upload.routes.js';
 const app = express();
 const httpServer = createServer(app);
 
+const allowedOrigins = config.cors.origin;
+
 const corsOptions = {
-  origin: config.cors.origin,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked by CORS:", origin); // debug log
+      callback(new Error(`CORS not allowed from ${origin}`));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
+
 app.use(express.json());
 
 app.get('/health', (req, res) => {
