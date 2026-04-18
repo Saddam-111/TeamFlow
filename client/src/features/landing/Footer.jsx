@@ -9,7 +9,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="py-10 sm:py-16 bg-black border-t border-zinc-800">
+    <footer className="py-5 bg-black border-t border-zinc-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 mb-8 sm:mb-12">
@@ -58,15 +58,10 @@ export function Footer() {
         </div>
         
         {/* Bottom Bar */}
-        <div className="pt-6 sm:pt-8 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+        <div className=" pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-center">
           <p className="text-gray-500 text-xs sm:text-sm order-2 sm:order-1">
             © 2026 TEAMFLOW. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 sm:gap-6 order-1 sm:order-2">
-            <button type="button" className="text-gray-500 hover:text-yellow-500 transition-colors text-xs sm:text-sm">Privacy</button>
-            <button type="button" className="text-gray-500 hover:text-yellow-500 transition-colors text-xs sm:text-sm">Terms</button>
-            <button type="button" className="text-gray-500 hover:text-yellow-500 transition-colors text-xs sm:text-sm">Cookies</button>
-          </div>
         </div>
       </div>
     </footer>
