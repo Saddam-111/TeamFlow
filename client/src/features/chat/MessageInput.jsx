@@ -48,7 +48,7 @@ export function MessageInput() {
     setAttachments(prev => prev.filter((_, i) => i !== index));
   };
 
-const handleSend = async (retryCount = 0) => {
+  const handleSend = async (retryCount = 0) => {
     if ((!message.trim() && attachments.length === 0) || !currentChannel || isSending) return;
     
     const tempId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
@@ -85,8 +85,7 @@ const handleSend = async (retryCount = 0) => {
       const messageAttachments = (createdMessage?.attachments?.length > 0) 
         ? createdMessage.attachments 
         : (attachments.length > 0 ? attachments : null);
-         
-      console.log('Sending message via socket:', currentChannel._id, createdMessage._id);
+          
       socketService.sendMessage(
         currentChannel._id,
         createdMessage.content || message,
@@ -144,15 +143,13 @@ const handleSend = async (retryCount = 0) => {
   if (!currentChannel) return null;
 
   return (
-    <div className="p-3 md:p-4 border-t border-surface-light flex-shrink-0">
-      {/* Error Display */}
+    <div className="p-3 sm:p-4 border-t border-white/[0.06] flex-shrink-0">
       {sendError && (
-        <div className="mb-2 p-2 bg-red-500/20 border border-red-500 rounded text-red-400 text-sm">
+        <div className="mb-2 p-2 bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
           {sendError}
         </div>
       )}
       
-      {/* Attachment Preview */}
       {attachments.length > 0 && (
         <div className="flex gap-2 mb-2 flex-wrap">
           {attachments.map((url, index) => (
@@ -161,16 +158,16 @@ const handleSend = async (retryCount = 0) => {
                 <img 
                   src={url} 
                   alt="preview" 
-                  className="w-16 h-16 object-cover rounded border border-gray-600"
+                  className="w-14 h-14 object-cover rounded border border-white/10"
                 />
               ) : (
-                <div className="w-16 h-16 flex items-center justify-center bg-surface-light rounded border border-gray-600">
+                <div className="w-14 h-14 flex items-center justify-center bg-white/[0.06] rounded border border-white/10">
                   📎
                 </div>
               )}
               <button
                 onClick={() => removeAttachment(index)}
-                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full text-white text-xs"
+                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full text-white text-xs flex items-center justify-center"
               >
                 ×
               </button>
@@ -191,7 +188,7 @@ const handleSend = async (retryCount = 0) => {
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isUploading}
-          className="p-2 text-gray-400 hover:text-white transition-colors disabled:opacity-50"
+          className="p-2 text-white/40 hover:text-white transition-colors disabled:opacity-50"
           title="Attach media"
         >
           {isUploading ? '⏳' : '📎'}
@@ -203,13 +200,13 @@ const handleSend = async (retryCount = 0) => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder={`Message #${currentChannel.name}`}
-          className="input-field flex-1"
+          className="input-field flex-1 text-sm"
           disabled={isSending}
         />
         <button
           onClick={handleSend}
           disabled={(!message.trim() && attachments.length === 0) || isSending}
-          className="btn-primary disabled:opacity-50"
+          className="btn-primary text-sm py-2.5 px-4"
         >
           SEND
         </button>

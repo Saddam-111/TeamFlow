@@ -4,103 +4,126 @@ import { Link } from 'react-router-dom';
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 overflow-hidden">
-      {/* Background - subtle */}
-      <div className="absolute inset-0 bg-bg-black z-0" />
-      <div className="absolute top-0 left-0 w-full h-full opacity-30" 
-        style={{ background: 'radial-gradient(ellipse at top left, #DFE104 0%, transparent 50%)' }} 
-      />
+      <div className="absolute inset-0 bg-bg-black" />
+      
+      <div className="absolute inset-0 grid-pattern opacity-50" />
+      
+      <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-lime-accent/10 rounded-full blur-[150px] glow-sphere animate-float" />
+      <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-emerald-glow/10 rounded-full blur-[120px] glow-sphere animate-float" style={{animationDelay: '2s'}} />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Content */}
           <div className="text-center lg:text-left order-2 lg:order-1">
-            {/* Beta Badge */}
-            <div className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full px-3 py-1.5 mb-6 sm:mb-8">
-              <span className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
-              <span className="text-yellow-500 font-semibold text-xs sm:text-sm uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6 sm:mb-8">
+              <span className="w-2 h-2 bg-lime-accent rounded-full animate-pulse" />
+              <span className="text-white/80 font-mono text-xs uppercase tracking-widest">
                 Now in Beta
               </span>
             </div>
             
-            {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-7xl xl:text-7xl font-black text-white mb-4 sm:mb-6 leading-tight">
-              <span className="text-white block">COLLABORATE</span>
-              <span className="text-acid-yellow block">WITHOUT LIMITS</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tighter text-white mb-4 sm:mb-6 leading-[0.95]">
+              <span className="block">COLLABORATE</span>
+              <span className="text-lime-accent">WITHOUT LIMITS</span>
             </h1>
             
-            {/* Subheadline */}
-            <p className="text-base sm:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8">
+            <p className="text-white/50 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">
               The all-in-one platform for modern teams. Chat, tasks, documents — unified in one powerful workspace.
             </p>
             
-            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <Link
                 to="/auth/register"
-                className="bg-acid-yellow text-black font-bold uppercase tracking-wider py-3 px-6 sm:py-4 sm:px-8 hover:bg-white transition text-sm sm:text-base"
+                className="group relative overflow-hidden bg-lime-accent text-black font-bold uppercase tracking-wider py-4 px-8 sm:px-10 hover:shadow-glow transition-all duration-300"
               >
-                Get Started Free
+                <span className="relative z-10">Get Started Free</span>
+                <div className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
               </Link>
               <Link
                 to="/auth/login"
-                className="border-2 border-zinc-700 text-white font-bold uppercase tracking-wider py-3 px-6 sm:py-4 sm:px-8 hover:border-yellow-500 hover:text-yellow-500 transition text-sm sm:text-base"
+                className="glass text-white font-bold uppercase tracking-wider py-4 px-8 sm:px-10 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-200"
               >
                 Watch Demo
               </Link>
             </div>
             
-            {/* Stats */}
-            <div className="flex gap-6 sm:gap-8 justify-center lg:justify-start mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-zinc-800">
-              <div>
-                <div className="text-2xl sm:text-3xl font-black text-yellow-400">10K+</div>
-                <div className="text-gray-500 text-xs sm:text-sm">Active Teams</div>
+            <div className="flex gap-6 sm:gap-10 justify-center lg:justify-start mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-white/[0.06]">
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold tracking-tighter text-lime-accent">10K+</div>
+                <div className="text-white/40 font-mono text-xs uppercase tracking-wider mt-1">Active Teams</div>
               </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-black text-yellow-400">50K+</div>
-                <div className="text-gray-500 text-xs sm:text-sm">Messages Daily</div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold tracking-tighter text-lime-accent">50K+</div>
+                <div className="text-white/40 font-mono text-xs uppercase tracking-wider mt-1">Messages Daily</div>
               </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-black text-yellow-400">99.9%</div>
-                <div className="text-gray-500 text-xs sm:text-sm">Uptime</div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold tracking-tighter text-lime-accent">99.9%</div>
+                <div className="text-white/40 font-mono text-xs uppercase tracking-wider mt-1">Uptime</div>
               </div>
             </div>
           </div>
           
-          {/* Right Content - Dashboard Preview - hidden on mobile */}
           <div className="relative hidden lg:block order-1 lg:order-2">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-              <div className="bg-zinc-950 border-b border-zinc-800 px-4 py-3 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-                <div className="ml-4 flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded">
-                  <span className="text-yellow-500 text-xs">teamflow</span>
-                </div>
-              </div>
-              <div className="p-4 grid grid-cols-3 gap-4">
-                <div className="col-span-1 bg-zinc-950 rounded-lg p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-yellow-500">
-                    <span className="font-bold text-sm">TEAMFLOW</span>
-                  </div>
-                  <div className="space-y-1">
-                    {['#general', '#design', '#dev'].map((channel, i) => (
-                      <div key={i} className={`text-xs px-2 py-1.5 rounded ${i === 0 ? 'bg-zinc-800 text-white' : 'text-gray-500'}`}>
-                        {channel}
-                      </div>
-                    ))}
+            <div className="relative">
+              <div className="absolute inset-0 bg-lime-accent/5 blur-3xl rounded-full transform scale-90" />
+              
+              <div className="glass rounded-xl overflow-hidden relative z-10">
+                <div className="bg-obsidian-light/60 border-b border-white/[0.06] px-4 py-3 flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                  <div className="ml-4 flex items-center gap-2 bg-white/[0.03] px-3 py-1.5 rounded">
+                    <span className="text-lime-accent font-mono text-xs">teamflow</span>
                   </div>
                 </div>
-                <div className="col-span-2 space-y-3">
-                  <div className="bg-zinc-800 rounded-lg p-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 rounded-full bg-yellow-500/20" />
-                      <div className="flex-1">
-                        <div className="h-2 w-16 bg-zinc-700 rounded mb-1" />
-                        <div className="h-2 w-10 bg-zinc-700 rounded" />
-                      </div>
+                <div className="p-4 grid grid-cols-3 gap-4">
+                  <div className="col-span-1 bg-obsidian/50 border border-white/[0.06] rounded-lg p-3 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-sm text-lime-accent">TEAMFLOW</span>
                     </div>
-                    <div className="h-2 w-full bg-zinc-700 rounded mb-1" />
-                    <div className="h-2 w-2/3 bg-zinc-700 rounded" />
+                    <div className="space-y-1">
+                      {[
+                        { name: '#general', active: true },
+                        { name: '#design', active: false },
+                        { name: '#dev', active: false }
+                      ].map((channel, i) => (
+                        <div 
+                          key={i} 
+                          className={`text-xs px-2 py-1.5 rounded transition-colors font-mono ${
+                            channel.active 
+                              ? 'bg-lime-accent/10 text-lime-accent border-l border-lime-accent/30' 
+                              : 'text-white/40 hover:text-white/60'
+                          }`}
+                        >
+                          {channel.name}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col-span-2 space-y-3">
+                    <div className="bg-obsidian/50 border border-white/[0.06] rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-6 h-6 rounded-full bg-lime-accent/20 flex items-center justify-center">
+                          <span className="text-lime-accent text-xs font-bold">S</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="h-2 w-20 bg-white/10 rounded" />
+                          <div className="h-2 w-12 bg-white/10 rounded mt-1" />
+                        </div>
+                      </div>
+                      <div className="h-2 w-full bg-white/[0.06] rounded mb-1" />
+                      <div className="h-2 w-2/3 bg-white/[0.06] rounded" />
+                    </div>
+                    <div className="bg-lime-accent/5 border border-lime-accent/20 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-6 h-6 rounded-full bg-lime-accent flex items-center justify-center">
+                          <span className="text-black text-xs font-bold">Y</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="h-2 w-16 bg-lime-accent/30 rounded" />
+                        </div>
+                      </div>
+                      <div className="h-2 w-full bg-lime-accent/20 rounded" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -109,10 +132,9 @@ export function Hero() {
         </div>
       </div>
       
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-        <div className="w-5 h-8 border-2 border-zinc-700 rounded-full flex justify-center pt-1.5">
-          <div className="w-1 h-1.5 bg-zinc-500 rounded-full animate-bounce" />
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center pt-1.5">
+          <div className="w-1 h-1.5 bg-lime-accent/50 rounded-full animate-bounce" />
         </div>
       </div>
     </section>

@@ -6,7 +6,7 @@ const showcases = [
     title: 'Real-Time Chat',
     description: 'Communicate seamlessly with your team through channels and direct messages. See who\'s online, typing, and get instant notifications.',
     image: (
-      <div className="bg-surface rounded-xl p-4">
+      <div className="glass rounded-xl p-4">
         <div className="space-y-3">
           {[
             { user: 'Sarah', msg: 'Hey team! Check this out', time: '2m' },
@@ -14,15 +14,15 @@ const showcases = [
             { user: 'You', msg: 'Working on the new design', time: 'now' }
           ].map((msg, i) => (
             <div key={i} className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-acid-yellow/20 flex items-center justify-center text-acid-yellow text-xs font-bold">
+              <div className="w-8 h-8 rounded-full bg-lime-accent/20 flex items-center justify-center text-lime-accent text-xs font-bold">
                 {msg.user[0]}
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-white text-sm font-medium">{msg.user}</span>
-                  <span className="text-gray-600 text-xs">{msg.time}</span>
+                  <span className="text-white/30 text-xs font-mono">{msg.time}</span>
                 </div>
-                <p className="text-gray-400 text-sm">{msg.msg}</p>
+                <p className="text-white/50 text-sm">{msg.msg}</p>
               </div>
             </div>
           ))}
@@ -36,9 +36,11 @@ const showcases = [
     image: (
       <div className="grid grid-cols-3 gap-2">
         {['To Do', 'In Progress', 'Done'].map((status, i) => (
-          <div key={status} className="bg-surface rounded-lg p-3">
-            <div className="text-xs font-bold text-gray-500 uppercase mb-2">{status}</div>
-            <div className={`h-16 rounded ${i === 0 ? 'bg-surface-light' : i === 1 ? 'bg-acid-yellow/10' : 'bg-green-500/10'}`} />
+          <div key={status} className="glass rounded-lg p-3">
+            <div className="text-xs font-mono uppercase text-white/40 mb-2">{status}</div>
+            <div className={`h-16 rounded ${
+              i === 0 ? 'bg-white/[0.06]' : i === 1 ? 'bg-lime-accent/10' : 'bg-emerald-glow/10'
+            }`} />
           </div>
         ))}
       </div>
@@ -48,14 +50,14 @@ const showcases = [
     title: 'Document Collaboration',
     description: 'Create, edit, and share documents in real-time. Work together with your team and track changes as they happen.',
     image: (
-      <div className="bg-surface rounded-xl p-4 space-y-2">
-        <div className="h-3 w-1/3 bg-gray-600 rounded" />
-        <div className="h-2 w-full bg-gray-700 rounded" />
-        <div className="h-2 w-2/3 bg-gray-700 rounded" />
+      <div className="glass rounded-xl p-4 space-y-2">
+        <div className="h-3 w-1/3 bg-white/10 rounded" />
+        <div className="h-2 w-full bg-white/[0.06] rounded" />
+        <div className="h-2 w-2/3 bg-white/[0.06] rounded" />
         <div className="flex gap-2 pt-2">
-          <div className="w-6 h-6 rounded-full bg-blue-500" />
-          <div className="w-6 h-6 rounded-full bg-green-500 -ml-2" />
-          <div className="w-6 h-6 rounded-full bg-acid-yellow -ml-2" />
+          <div className="w-6 h-6 rounded-full bg-blue-500/50" />
+          <div className="w-6 h-6 rounded-full bg-emerald-glow/50 -ml-2" />
+          <div className="w-6 h-6 rounded-full bg-lime-accent -ml-2" />
         </div>
       </div>
     )
@@ -64,29 +66,31 @@ const showcases = [
 
 export function ProductShowcase() {
   return (
-    <section id="showcase" className="py-24 bg-surface/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-acid-yellow font-bold uppercase tracking-widest text-sm">Product</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mt-4 mb-6">
+    <section id="showcase" className="py-20 sm:py-24 bg-obsidian/30 relative">
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14 sm:mb-16">
+          <span className="inline-block text-lime-accent font-mono text-xs uppercase tracking-widest mb-4">Product</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white mt-2 mb-4 sm:mb-6">
             SEE IT IN ACTION
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-white/50 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             Experience the power of TEAMFLOW with our intuitive interface.
           </p>
         </div>
         
-        <div className="space-y-24">
+        <div className="space-y-20 sm:space-y-24">
           {showcases.map((item, index) => (
-            <div key={index} className={`grid lg:grid-cols-2 gap-12 items-center ${
+            <div key={index} className={`grid lg:grid-cols-2 gap-8 sm:gap-12 items-center ${
               index % 2 === 1 ? 'lg:flex-row-reverse' : ''
             }`}>
               <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                <h3 className="text-3xl font-bold text-white mb-4">{item.title}</h3>
-                <p className="text-gray-400 text-lg mb-6">{item.description}</p>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">{item.title}</h3>
+                <p className="text-white/50 text-base sm:text-lg mb-6 leading-relaxed">{item.description}</p>
                 <Link
                   to="/auth/register"
-                  className="inline-flex items-center gap-2 text-acid-yellow font-bold hover:gap-4 transition-all"
+                  className="inline-flex items-center gap-2 text-lime-accent font-bold hover:gap-4 transition-all duration-300"
                 >
                   Learn more
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +99,7 @@ export function ProductShowcase() {
                 </Link>
               </div>
               <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <div className="bg-bg-black border border-surface-light rounded-2xl p-6 shadow-2xl hover:scale-[1.02] transition-transform">
+                <div className="glass rounded-2xl p-5 sm:p-6 hover:border-lime-accent/20 transition-all duration-500">
                   {item.image}
                 </div>
               </div>

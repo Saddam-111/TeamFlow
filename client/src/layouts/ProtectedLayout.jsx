@@ -31,7 +31,7 @@ export function ProtectedLayout() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-bg-black flex items-center justify-center">
-        <div className="text-acid-yellow heading-hero">LOADING...</div>
+        <div className="text-lime-accent heading-hero animate-pulse">LOADING...</div>
       </div>
     );
   }
@@ -42,15 +42,17 @@ export function ProtectedLayout() {
 
   return (
     <div className="h-screen overflow-hidden bg-bg-black flex flex-col">
-      <header className="h-14 bg-surface border-b border-surface-light flex items-center justify-between px-2 md:px-4">
-        <div className="flex items-center gap-2 md:gap-4">
-          <h1 className="text-sm md:text-xl font-black uppercase tracking-wider text-acid-yellow">TEAMFLOW</h1>
+      <header className="h-14 glass border-b border-white/[0.06] flex items-center justify-between px-3 sm:px-4 lg:px-6 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <h1 className="text-sm sm:text-lg md:text-xl font-bold uppercase tracking-wider text-lime-accent">
+            TEAMFLOW
+          </h1>
         </div>
-        <div className="flex items-center gap-2 md:gap-4">
-          <span className="text-xs md:text-sm font-bold uppercase hidden sm:block">{user?.username}</span>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <span className="text-xs sm:text-sm font-mono uppercase text-white/50 hidden sm:block">{user?.username}</span>
           <button
             onClick={handleLogout}
-            className="text-xs md:text-sm font-bold uppercase hover:text-acid-yellow transition-colors"
+            className="text-xs sm:text-sm font-bold uppercase text-white/50 hover:text-lime-accent transition-colors"
           >
             Logout
           </button>

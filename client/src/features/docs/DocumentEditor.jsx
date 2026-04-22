@@ -83,8 +83,8 @@ export function DocumentEditor() {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg-black">
         <div className="text-center">
-          <h2 className="text-h2 font-bold uppercase text-gray-500">Select a Document</h2>
-          <p className="text-gray-400 mt-2">Choose a document to start editing</p>
+          <h2 className="text-lg font-bold uppercase text-white/40">Select a Document</h2>
+          <p className="text-white/30 text-sm mt-2">Choose a document to start editing</p>
         </div>
       </div>
     );
@@ -92,23 +92,23 @@ export function DocumentEditor() {
 
   return (
     <div className="flex-1 flex flex-col bg-bg-black h-full overflow-hidden">
-      <div className="p-4 border-b border-surface-light flex items-center justify-between flex-shrink-0">
+      <div className="p-3 sm:p-4 border-b border-white/[0.06] flex items-center justify-between flex-shrink-0">
         <input
           type="text"
           value={title}
           onChange={(e) => handleTitleChange(e.target.value)}
-          className="text-h2 font-bold uppercase bg-transparent outline-none border-none focus:ring-0"
+          className="text-base sm:text-lg font-bold uppercase bg-transparent outline-none border-none focus:ring-0 text-white"
         />
-        {isSaving && <span className="text-gray-500 text-sm">Saving...</span>}
+        {isSaving && <span className="text-white/30 text-xs font-mono">Saving...</span>}
       </div>
 
-      <div className="flex-1 p-4 md:p-8 overflow-auto custom-scrollbar">
+      <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-auto custom-scrollbar">
         <textarea
           ref={editorRef}
           value={content}
           onChange={handleContentChange}
           placeholder="Start typing..."
-          className="w-full h-full bg-transparent outline-none resize-none text-lg leading-relaxed"
+          className="w-full h-full bg-transparent outline-none resize-none text-sm sm:text-base leading-relaxed text-white/80 placeholder:text-white/20"
         />
       </div>
     </div>

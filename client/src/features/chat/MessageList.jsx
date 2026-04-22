@@ -32,7 +32,6 @@ export function MessageList() {
   }, [currentChannel?._id, currentWorkspace?._id]);
 
   useEffect(() => {
-    // Check if user is workspace owner
     setIsWorkspaceOwner(currentWorkspace?.owner === user?._id || currentWorkspace?.createdBy === user?._id);
   }, [currentWorkspace, user]);
 
@@ -205,10 +204,6 @@ export function MessageList() {
     return isMyMessage || isWorkspaceOwner;
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const formatTime = (date) => {
     return new Date(date).toLocaleTimeString('en-US', { 
       hour: '2-digit', 
@@ -233,8 +228,8 @@ export function MessageList() {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg-black">
         <div className="text-center">
-          <h2 className="text-h2 font-bold uppercase text-gray-500">Select a Channel</h2>
-          <p className="text-gray-400 mt-2">Choose a channel to start chatting</p>
+          <h2 className="text-xl font-bold uppercase text-white/40">Select a Channel</h2>
+          <p className="text-white/30 text-sm mt-2">Choose a channel to start chatting</p>
         </div>
       </div>
     );
@@ -242,28 +237,28 @@ export function MessageList() {
 
   return (
     <div className="flex-1 flex flex-col bg-bg-black h-full overflow-hidden">
-      <div className="p-3 md:p-4 border-b border-surface-light flex-shrink-0 flex justify-between items-start">
+      <div className="p-3 sm:p-4 border-b border-white/[0.06] flex-shrink-0 flex justify-between items-start">
         <div>
-          <h2 className="text-lg md:text-xl font-bold uppercase tracking-wider">
+          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-white">
             # {currentChannel.name}
           </h2>
           {currentChannel.description && (
-            <p className="text-gray-400 text-sm mt-1 hidden md:block">{currentChannel.description}</p>
+            <p className="text-white/40 text-xs sm:text-sm mt-0.5 hidden md:block">{currentChannel.description}</p>
           )}
         </div>
         {onlineUsers.length > 0 && (
-          <div className="text-xs text-green-400">
+          <div className="text-xs text-emerald-glow font-mono">
             • {onlineUsers.length + 1} online
           </div>
         )}
         {onlinePopup && (
-          <div className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg animate-pulse z-50">
+          <div className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-emerald-glow/20 text-emerald-glow px-4 py-1.5 rounded-full text-xs font-medium shadow-glow-sm animate-pulse z-50">
             {onlinePopup}
           </div>
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-2 md:space-y-4 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-3 custom-scrollbar">
         {messages.map((message) => {
           const isMyMessage = message.sender?._id === user?._id || message.sender === user?._id;
           const canEdit = canEditMessage(message);
@@ -272,21 +267,21 @@ export function MessageList() {
           return (
             <div 
               key={message._id || message.id} 
-              className={`flex gap-2 md:gap-3 group ${isMyMessage ? 'flex-row-reverse' : ''}`}
+              className={`flex gap-2 sm:gap-3 group ${isMyMessage ? 'flex-row-reverse' : ''}`}
             >
               {!isMyMessage && (
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-acid-yellow rounded-sm flex-shrink-0 flex items-center justify-center font-bold text-black">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 bg-lime-accent rounded-sm flex-shrink-0 flex items-center justify-center font-bold text-black text-xs">
                   {message.sender?.username?.[0]?.toUpperCase() || '?'}
                 </div>
               )}
-              <div className={`flex-1 max-w-[70%] md:max-w-[60%] ${isMyMessage ? 'items-end' : 'items-start'}`}>
+              <div className={`flex-1 max-w-[70%] sm:max-w-[60%] ${isMyMessage ? 'items-end' : 'items-start'}`}>
                 {!isMyMessage && (
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-bold text-acid-yellow text-sm">
+                    <span className="font-bold text-lime-accent text-xs sm:text-sm">
                       {message.sender?.username || 'Unknown'}
                     </span>
                     {message.isEdited && (
-                      <span className="text-gray-500 text-xs">(edited)</span>
+                      <span className="text-white/30 text-xs">(edited)</span>
                     )}
                   </div>
                 )}
@@ -296,19 +291,19 @@ export function MessageList() {
                     <textarea
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      className="w-full bg-surface-light text-white p-2 rounded text-sm"
+                      className="w-full bg-white/[0.06] text-white p-2 rounded text-sm"
                       rows={2}
                     />
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={() => handleSaveEdit(message._id)}
-                        className="px-2 py-1 bg-acid-yellow text-black text-xs rounded font-bold"
+                        className="px-2 py-1 bg-lime-accent text-black text-xs rounded font-bold"
                       >
                         Save
                       </button>
                       <button
                         onClick={handleCancelEdit}
-                        className="px-2 py-1 bg-gray-600 text-white text-xs rounded"
+                        className="px-2 py-1 bg-white/[0.1] text-white/60 text-xs rounded"
                       >
                         Cancel
                       </button>
@@ -316,14 +311,13 @@ export function MessageList() {
                   </div>
                 ) : (
                   <>
-                    <div className={`px-3 py-2 md:px-4 md:py-2 rounded-lg ${
+                    <div className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg ${
                       isMyMessage 
-                        ? 'bg-acid-yellow text-black rounded-br-none' 
-                        : 'bg-surface-light text-white rounded-bl-none'
+                        ? 'bg-lime-accent text-black rounded-br-sm' 
+                        : 'bg-white/[0.06] text-white rounded-bl-sm'
                     }`}>
-                      <p className="whitespace-pre-wrap text-sm md:text-base">{message.content}</p>
+                      <p className="whitespace-pre-wrap text-xs sm:text-sm">{message.content}</p>
                       
-                      {/* Attachments */}
                       {message.attachments && message.attachments.length > 0 && (
                         <div className="mt-2 space-y-2">
                           {message.attachments.map((url, index) => (
@@ -332,7 +326,7 @@ export function MessageList() {
                                 <img 
                                   src={url} 
                                   alt="attachment" 
-                                  className="max-w-full rounded border border-gray-600"
+                                  className="max-w-full rounded border border-white/10"
                                   onClick={() => window.open(url, '_blank')}
                                 />
                               ) : (
@@ -340,7 +334,7 @@ export function MessageList() {
                                   href={url} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="flex items-center gap-2 text-blue-400 hover:underline"
+                                  className="flex items-center gap-2 text-lime-accent hover:underline"
                                 >
                                   <span>{getFileIcon(url)}</span>
                                   <span className="text-xs">Attachment {index + 1}</span>
@@ -353,27 +347,26 @@ export function MessageList() {
                     </div>
                     
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-gray-500 text-xs">
+                      <span className="text-white/30 text-xs">
                         {formatTime(message.createdAt)}
                       </span>
                       {message.isEdited && (
-                        <span className="text-gray-500 text-xs">(edited)</span>
+                        <span className="text-white/30 text-xs">(edited)</span>
                       )}
                       {isMyMessage && message.status && (
                         <span className="text-xs">
-                          {message.status === 'sent' && <span className="text-gray-500">✓</span>}
-                          {message.status === 'delivered' && <span className="text-gray-400">✓✓</span>}
-                          {message.status === 'read' && <span className="text-blue-400">✓✓</span>}
+                          {message.status === 'sent' && <span className="text-white/40">✓</span>}
+                          {message.status === 'delivered' && <span className="text-white/60">✓✓</span>}
+                          {message.status === 'read' && <span className="text-lime-accent">✓✓</span>}
                         </span>
                       )}
                       
-                      {/* Edit/Delete buttons - show on hover */}
                       {(canEdit || canDelete) && (
-                        <div className="hidden group-hover:flex gap-2">
+                        <div className="hidden group-hover:flex gap-2 ml-2">
                           {canEdit && (
                             <button
                               onClick={() => handleEditMessage(message)}
-                              className="text-gray-400 hover:text-white text-xs"
+                              className="text-white/40 hover:text-white text-xs"
                             >
                               ✏️ Edit
                             </button>
@@ -381,7 +374,7 @@ export function MessageList() {
                           {canDelete && (
                             <button
                               onClick={() => handleDeleteMessage(message._id)}
-                              className="text-gray-400 hover:text-red-400 text-xs"
+                              className="text-white/40 hover:text-red-400 text-xs"
                             >
                               🗑️ Delete
                             </button>
@@ -404,11 +397,11 @@ export function MessageList() {
         if (otherTyping.length === 0) return null;
         const names = otherTyping.map(u => u.username).join(', ');
         return (
-          <div className="px-4 py-2 text-gray-400 text-sm flex items-center gap-2 flex-shrink-0">
+          <div className="px-4 py-2 text-white/40 text-xs flex items-center gap-2 flex-shrink-0">
             <span className="flex gap-1">
-              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
-              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></span>
-              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
+              <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce"></span>
+              <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></span>
+              <span className="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
             </span>
             <span>{otherTyping.length === 1 ? names : `${otherTyping.length} users`} typing...</span>
           </div>

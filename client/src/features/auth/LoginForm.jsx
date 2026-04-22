@@ -33,22 +33,36 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-bg-black flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-12">
-          <h1 className="heading-display text-acid-yellow mb-4">TEAMFLOW</h1>
-          <p className="text-gray-400 text-lg">REAL-TIME COLLABORATION</p>
+    <div className="min-h-screen bg-bg-black flex items-center justify-center p-4 relative">
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+      <div className="absolute top-1/4 -left-1/4 w-[400px] h-[400px] bg-lime-accent/10 rounded-full blur-[100px] glow-sphere" />
+      <div className="absolute bottom-1/4 -right-1/4 w-[400px] h-[400px] bg-emerald-glow/10 rounded-full blur-[100px] glow-sphere" />
+      
+      <div className="w-full max-w-md relative z-10">
+        <div className="text-center mb-10 sm:mb-12">
+          <Link to="/" className="inline-flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 group">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-lime-accent flex items-center justify-center">
+              <svg className="w-6 h-6 sm:w-7 sm:h-7 text-black" viewBox="0 0 32 32" fill="currentColor">
+                <path d="M4 8a4 4 0 014-4h16a4 4 0 010 8H8a4 4 0 01-4-4zM4 16a4 4 0 014-4h8a4 4 0 010 8H8a4 4 0 01-4-4zM4 24a4 4 0 014-4h12a4 4 0 010 8H8a4 4 0 01-4-4z"/>
+              </svg>
+            </div>
+            <span className="font-bold text-2xl sm:text-3xl tracking-tighter text-white group-hover:text-lime-accent transition-colors">
+              TEAMFLOW
+            </span>
+          </Link>
+          <h1 className="heading-display text-lime-accent mb-2">WELCOME BACK</h1>
+          <p className="text-white/40 text-sm uppercase tracking-wider">REAL-TIME COLLABORATION</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
           {error && (
-            <div className="bg-red-900/30 border border-red-500 text-red-400 px-4 py-3">
+            <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 text-sm">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-gray-400 mb-2">
+            <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2 font-mono">
               Email
             </label>
             <input
@@ -62,7 +76,7 @@ export function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-bold uppercase tracking-wider text-gray-400 mb-2">
+            <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2 font-mono">
               Password
             </label>
             <input
@@ -85,8 +99,8 @@ export function LoginForm() {
         </form>
 
         <div className="text-center mt-8">
-          <span className="text-gray-400">NO ACCOUNT? </span>
-          <Link to="/auth/register" className="text-acid-yellow font-bold hover:underline">
+          <span className="text-white/40">NO ACCOUNT? </span>
+          <Link to="/auth/register" className="text-lime-accent font-bold hover:underline">
             REGISTER
           </Link>
         </div>

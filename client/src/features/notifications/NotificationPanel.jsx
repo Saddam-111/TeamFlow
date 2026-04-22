@@ -38,10 +38,6 @@ export function NotificationPanel() {
     }
   };
 
-  const handleNewNotification = (notification) => {
-    addNotification(notification);
-  };
-
   const handleMarkAsRead = async (id) => {
     try {
       await notificationAPI.markAsRead(id);
@@ -77,50 +73,50 @@ export function NotificationPanel() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 hover:bg-surface-light transition-colors"
+        className="relative p-2 hover:bg-white/[0.06] transition-colors rounded-lg"
       >
-        <span className="text-xl">🔔</span>
+        <span className="text-lg">🔔</span>
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-acid-yellow text-black text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+          <span className="absolute -top-0.5 -right-0.5 bg-lime-accent text-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-72 md:w-80 bg-surface border border-surface-light z-50">
-          <div className="p-4 border-b border-surface-light flex items-center justify-between">
-            <h3 className="font-bold uppercase tracking-wider">Notifications</h3>
+        <div className="absolute right-0 top-full mt-2 w-64 sm:w-72 glass border border-white/10 z-50 shadow-xl">
+          <div className="p-3 border-b border-white/[0.06] flex items-center justify-between">
+            <h3 className="font-bold uppercase tracking-wider text-xs sm:text-sm">Notifications</h3>
             {unreadCount > 0 && (
               <button
                 onClick={handleMarkAllAsRead}
-                className="text-xs text-acid-yellow hover:underline"
+                className="text-[10px] sm:text-xs text-lime-accent hover:underline"
               >
                 Mark all read
               </button>
             )}
           </div>
           
-          <div className="max-h-96 overflow-y-auto">
+          <div className="max-h-80 overflow-y-auto custom-scrollbar">
             {notifications.length === 0 ? (
-              <div className="p-4 text-center text-gray-500">No notifications</div>
+              <div className="p-4 text-center text-white/30 text-xs">No notifications</div>
             ) : (
               notifications.map((notification) => (
                 <div
                   key={notification._id}
                   onClick={() => !notification.isRead && handleMarkAsRead(notification._id)}
-                  className={`p-4 border-b border-surface-light cursor-pointer hover:bg-surface-light transition-colors ${
-                    !notification.isRead ? 'bg-surface-light/50' : ''
+                  className={`p-3 border-b border-white/[0.06] cursor-pointer hover:bg-white/[0.06] transition-colors ${
+                    !notification.isRead ? 'bg-lime-accent/5' : ''
                   }`}
                 >
                   <div className="flex gap-3">
-                    <span className="text-xl">{getNotificationIcon(notification.type)}</span>
-                    <div className="flex-1">
-                      <p className="font-bold text-sm">{notification.title}</p>
+                    <span className="text-lg">{getNotificationIcon(notification.type)}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-xs truncate">{notification.title}</p>
                       {notification.content && (
-                        <p className="text-gray-400 text-xs mt-1">{notification.content}</p>
+                        <p className="text-white/40 text-[10px] sm:text-xs mt-0.5 truncate">{notification.content}</p>
                       )}
-                      <p className="text-gray-500 text-xs mt-1">
+                      <p className="text-white/20 text-[10px] mt-1 font-mono">
                         {new Date(notification.createdAt).toLocaleString()}
                       </p>
                     </div>
