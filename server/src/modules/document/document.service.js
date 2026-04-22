@@ -21,7 +21,7 @@ class DocumentService {
       .select('title workspace owner createdAt updatedAt version');
   }
 
-  async updateDocument(documentId, userId, updateData) {
+  async updateDocument(documentId, userId, updateData, workspaceMembers = []) {
     const document = await Document.findById(documentId);
     
     if (!document) {
@@ -29,10 +29,21 @@ class DocumentService {
     }
 
     const isOwner = document.owner.toString() === userId;
-    const collaborator = document.collaborators.find(c => c.user.toString() === userId);
-    const canEdit = isOwner || (collaborator && collaborator.permission === 'edit');
+    const collaborator = document.collaborators.find(c => c.user && c.user.toString() === userId);
+    const isCollaborator = collaborator && collaborator.permission === 'edit';
+    
+    let isWorkspaceMember = false;
+    if (workspaceMembers.length > 0) {
+      isWorkspaceMember = workspaceMembers.some(m => {
+        const memberId = m.user?._id ? m.user._id.toString() : m.user?.toString();
+        return memberId === userId;
+      });
+    }
+    
+    const canEdit = isOwner || isCollaborator || isWorkspaceMember || document.isPublic;
 
     if (!canEdit) {
+      console.log('Document edit denied:', { userId, isOwner, isCollaborator, isWorkspaceMember, documentOwner: document.owner.toString() });
       throw new Error('Not authorized to edit this document');
     }
 

@@ -1,4 +1,5 @@
 import documentService from './document.service.js';
+import workspaceService from '../workspace/workspace.service.js';
 
 class DocumentController {
   async create(req, res) {
@@ -37,7 +38,15 @@ class DocumentController {
 
   async update(req, res) {
     try {
-      const document = await documentService.updateDocument(req.params.id, req.user.id, req.body);
+      let workspaceMembers = [];
+      try {
+        const workspace = await workspaceService.getWorkspaceById(req.params.workspaceId);
+        workspaceMembers = workspace?.members || [];
+      } catch (e) {
+        console.error('Failed to get workspace members:', e);
+      }
+      
+      const document = await documentService.updateDocument(req.params.id, req.user.id, req.body, workspaceMembers);
       if (!document) {
         return res.status(404).json({ message: 'Document not found' });
       }

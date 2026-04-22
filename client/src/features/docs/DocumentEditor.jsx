@@ -7,34 +7,45 @@ import socketService from '../../services/socket';
 
 export function DocumentEditor() {
   const { currentDocument, setCurrentDocument, updateDocument } = useDocumentStore();
-  const { currentWorkspace } = useWorkspaceStore();
+  const { currentWorkspace, members } = useWorkspaceStore();
   const { user } = useAuthStore();
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const editorRef = useRef(null);
   const saveTimeoutRef = useRef(null);
+  const lastLoadedDocId = useRef(null);
 
   useEffect(() => {
-    if (currentDocument) {
+    if (currentDocument && currentDocument._id !== lastLoadedDocId.current) {
+      lastLoadedDocId.current = currentDocument._id;
       setContent(currentDocument.content || '');
       setTitle(currentDocument.title || 'Untitled');
-      socketService.joinDocument(currentWorkspace._id, currentDocument._id);
+      
+      if (currentWorkspace?._id && currentDocument._id) {
+        socketService.joinDocument(currentWorkspace._id, currentDocument._id);
+      }
     }
     return () => {
-      if (currentDocument) {
+      if (currentDocument?._id) {
         socketService.leaveDocument(currentDocument._id);
       }
     };
   }, [currentDocument?._id, currentWorkspace?._id]);
 
   useEffect(() => {
+    const handleRemoteChange = (data) => {
+      if (currentDocument && data.documentId === currentDocument._id && data.userId !== user._id) {
+        setContent(data.content);
+      }
+    };
+
     socketService.on('document-changed', handleRemoteChange);
-    return () => socketService.off('document-changed');
-  }, []);
+    return () => socketService.off('document-changed', handleRemoteChange);
+  }, [currentDocument, user._id]);
 
   const handleRemoteChange = useCallback((data) => {
-    if (data.documentId === currentDocument._id && data.userId !== user._id) {
+    if (currentDocument && data.documentId === currentDocument._id && data.userId !== user._id) {
       setContent(data.content);
     }
   }, [currentDocument, user._id]);
@@ -53,11 +64,18 @@ export function DocumentEditor() {
   };
 
   const saveDocument = async (contentToSave) => {
-    if (!currentDocument || isSaving) return;
+    if (!currentDocument || !currentWorkspace || isSaving) return;
     setIsSaving(true);
     try {
-      const response = await documentAPI.update(currentWorkspace._id, currentDocument._id, { content: contentToSave });
+      await documentAPI.update(currentWorkspace._id, currentDocument._id, { content: contentToSave });
       updateDocument(currentDocument._id, { content: contentToSave });
+      
+      socketService.updateDocument(
+        currentDocument._id,
+        contentToSave,
+        null,
+        user._id
+      );
     } catch (err) {
       console.error('Failed to save document:', err);
     } finally {
@@ -67,11 +85,18 @@ export function DocumentEditor() {
 
   const handleTitleChange = async (newTitle) => {
     setTitle(newTitle);
-    if (!currentDocument || isSaving) return;
+    if (!currentDocument || !currentWorkspace || isSaving) return;
     setIsSaving(true);
     try {
       await documentAPI.update(currentWorkspace._id, currentDocument._id, { title: newTitle });
       updateDocument(currentDocument._id, { title: newTitle });
+      
+      socketService.updateDocument(
+        currentDocument._id,
+        content,
+        null,
+        user._id
+      );
     } catch (err) {
       console.error('Failed to update title:', err);
     } finally {

@@ -3,7 +3,6 @@ import { useDocumentStore } from '../../store/document.store';
 import { useWorkspaceStore } from '../../store/workspace.store';
 import { useAuthStore } from '../../store/auth.store';
 import { documentAPI } from '../../services/api';
-import socketService from '../../services/socket';
 
 export function DocumentList() {
   const { documents, setDocuments, setCurrentDocument, addDocument } = useDocumentStore();
@@ -11,6 +10,7 @@ export function DocumentList() {
   const [isCreating, setIsCreating] = useState(false);
   const [newDoc, setNewDoc] = useState({ title: 'Untitled' });
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (currentWorkspace?._id) {
@@ -28,12 +28,27 @@ export function DocumentList() {
     }
   };
 
+  const handleSelectDocument = async (doc) => {
+    if (!currentWorkspace?._id || isLoading) return;
+    setIsLoading(true);
+    try {
+      const response = await documentAPI.getById(currentWorkspace._id, doc._id);
+      setCurrentDocument(response.data);
+    } catch (err) {
+      console.error('Failed to load document:', err);
+      setCurrentDocument(doc);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
       const response = await documentAPI.create(currentWorkspace._id, newDoc);
-      addDocument(response.data);
-      setCurrentDocument(response.data);
+      const fullDocResponse = await documentAPI.getById(currentWorkspace._id, response.data._id);
+      addDocument(fullDocResponse.data);
+      setCurrentDocument(fullDocResponse.data);
       setIsCreating(false);
       setNewDoc({ title: 'Untitled' });
     } catch (err) {
@@ -62,8 +77,9 @@ export function DocumentList() {
               documents.map((doc) => (
                 <button
                   key={doc._id}
-                  onClick={() => setCurrentDocument(doc)}
-                  className="w-full text-left p-2 mb-1 text-xs sm:text-sm hover:bg-white/[0.06] transition-colors font-mono text-white/60 hover:text-white rounded"
+                  onClick={() => handleSelectDocument(doc)}
+                  disabled={isLoading}
+                  className="w-full text-left p-2 mb-1 text-xs sm:text-sm hover:bg-white/[0.06] transition-colors font-mono text-white/60 hover:text-white rounded disabled:opacity-50"
                 >
                   {doc.title}
                 </button>
