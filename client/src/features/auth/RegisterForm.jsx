@@ -9,7 +9,7 @@ export function RegisterForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
   const setLoading = useAuthStore((state) => state.setLoading);
@@ -38,20 +38,33 @@ export function RegisterForm() {
       <div className="absolute inset-0 grid-pattern opacity-30" />
       <div className="absolute top-1/4 -left-1/4 w-[400px] h-[400px] bg-lime-accent/10 rounded-full blur-[100px] glow-sphere" />
       <div className="absolute bottom-1/4 -right-1/4 w-[400px] h-[400px] bg-emerald-glow/10 rounded-full blur-[100px] glow-sphere" />
-      
+
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-10 sm:mb-12">
           <Link to="/" className="inline-flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 group">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-lime-accent flex items-center justify-center">
               <svg className="w-6 h-6 sm:w-7 sm:h-7 text-black" viewBox="0 0 32 32" fill="currentColor">
-                <path d="M4 8a4 4 0 014-4h16a4 4 0 010 8H8a4 4 0 01-4-4zM4 16a4 4 0 014-4h8a4 4 0 010 8H8a4 4 0 01-4-4zM4 24a4 4 0 014-4h12a4 4 0 010 8H8a4 4 0 01-4-4z"/>
+                <path d="M4 8a4 4 0 014-4h16a4 4 0 010 8H8a4 4 0 01-4-4zM4 16a4 4 0 014-4h8a4 4 0 010 8H8a4 4 0 01-4-4zM4 24a4 4 0 014-4h12a4 4 0 010 8H8a4 4 0 01-4-4z" />
               </svg>
             </div>
             <span className="font-bold text-2xl sm:text-3xl tracking-tighter text-white group-hover:text-lime-accent transition-colors">
               TEAMFLOW
             </span>
           </Link>
-          <h1 className="heading-display text-lime-accent mb-2">GET STARTED</h1>
+          <h1 className="
+  heading-display 
+  text-lime-accent 
+  mb-2 
+  flex flex-col 
+  md:flex-row 
+  md:items-center 
+  md:justify-center 
+  md:gap-4 
+  text-4xl sm:text-5xl md:text-6xl lg:text-7xl
+">
+            <span className="tracking-tight">GET</span>
+            <span className="tracking-tight">STARTED</span>
+          </h1>
           <p className="text-white/40 text-sm uppercase tracking-wider">CREATE YOUR ACCOUNT</p>
         </div>
 
